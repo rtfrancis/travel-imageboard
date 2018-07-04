@@ -1,0 +1,212 @@
+body {
+    margin: 0;
+    font-family: "Raleway", sans-serif;
+}
+
+.images {
+    background-image: url("bricks.jpg");
+    border-top: 1px solid white;
+    padding: 10px;
+    padding-top: 50px;
+}
+
+.imageDisplay {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-basis: 50%;
+}
+
+#getmore {
+    display: block;
+    text-align: center;
+    margin: 20px auto;
+    width: 150px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid black;
+    border-radius: 10px;
+    user-select: none;
+    outline: none;
+}
+
+#getmore:hover {
+    background-color: white;
+    color: rgba(0, 0, 0, 0.5);
+    border: 1px solid white;
+    color: black;
+    user-select: none;
+}
+
+#uploadButton {
+    display: block;
+    position: relative;
+    top: 35px;
+    margin: 0 auto;
+    text-align: center;
+    border: 0.5px solid white;
+    background-color: rgba(0, 0, 0, 0);
+    background-color: none;
+    color: white;
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+}
+
+#uploadButton:hover {
+    background-color: white;
+    color: rgba(0, 0, 0, 0.5);
+    /* color: black; */
+}
+
+#latestImages {
+    display: block;
+}
+
+.overlay {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    bottom: 25px;
+    right: 25px;
+    color: grey;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.9);
+    color: grey;
+    text-align: center;
+    border-radius: 25px;
+    overflow: scroll;
+}
+
+#closer {
+    position: fixed;
+    right: 40px;
+    top: 40px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.comment {
+    border: 1px solid grey;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    border-radius: 3px;
+}
+
+.commentsDisplay {
+    margin-bottom: 15px;
+}
+
+.bigImage img {
+    width: 400px;
+    height: 300px;
+    object-fit: contain;
+    margin-top: 10px;
+}
+
+input {
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.thumbTitle {
+    text-align: center;
+    font-family: "Permanent Marker", cursive;
+    font-size: 23px;
+    margin-top: 7px;
+    overflow: ;
+}
+
+button {
+    font-size: 12px;
+    padding: 5px 10px;
+    display: inline;
+    margin-right: 5px;
+    outline: none;
+}
+
+.photo {
+    width: 280px;
+    height: 250px;
+    display: inline-block;
+    overflow: hidden;
+    margin-right: 10px;
+    padding: 7px;
+    margin-bottom: 15px;
+    background-color: white;
+}
+
+.photo:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+img {
+    width: 280px;
+    height: 200px;
+    overflow: hidden;
+    flex-basis: 50%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 3%;
+}
+
+.uploadHead {
+    background-image: url("sunset.jpg");
+    border-top: 1px solid white;
+    height: 300px;
+}
+
+.headingTitle {
+    padding-top: 20px;
+    font-size: 40px;
+    color: white;
+    font-family: "Permanent Marker", cursive;
+    text-align: center;
+}
+
+header {
+    background-image: url("bricks.jpg");
+    height: 60px;
+    text-align: center;
+    font-family: "Permanent Marker", cursive;
+    padding-top: 15px;
+    padding-bottom: 30px;
+    margin-top: -20px;
+}
+
+.uploadWindow {
+    position: fixed;
+    top: 150px;
+    left: 150px;
+    bottom: 150px;
+    right: 150px;
+    text-align: center;
+    background: white;
+    min-height: 250px;
+    padding-top: 40px;
+    border-radius: 25px;
+    z-index: 100;
+}
+
+#closeUploader {
+    position: fixed;
+    top: 162px;
+    right: 160px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.uploadWindow input {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+#uploadPhoto {
+    background-color: rgba(0, 0, 0, 0);
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}

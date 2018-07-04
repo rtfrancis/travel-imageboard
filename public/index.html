@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+    <script src="//connect.soundcloud.com/sdk.js"></script>
+</head>
+<body>
+
+    <main id="main">
+        <div class="uploadHead">
+
+            <p class="headingTitle">Oh, the places you'll go</p>
+            <button id="uploadButton" type="button" name="button" v-on:click="uploadModal">Upload Image</button>
+
+        </div>
+
+
+    <upload-modal v-if="uploadPositive" v-on:close="closeUpload" v-on:uploaded="addNewImage"></upload-modal>
+
+    <div class="images">
+
+    <div class="imageDisplay" v-if="images.length > 0">
+
+        <div class="photo" v-for="image in images">
+            <a v-bind:href="'#' + image.id"><img
+            v-bind:src="image.url"></a>
+            <p class="thumbTitle">{{image.title}}</p>
+
+        </div>
+        <image-modal v-if="currentImageId" v-bind:id="currentImageId" v-on:close="closeMe"></image-modal>
+    </div>
+    <button id="getmore"  v-on:click="getMoreImages" type="button" name="button">Get more</button>
+    </div>
+
+
+    </main>
+    <script id="main-modal" type="text/x-template">
+        <div class="overlay">
+        <button id="closer" v-on:click="closeMe">X</button>
+        <div>
+            <div class="bigImage">
+
+            <img  v-bind:src="image.url" />
+            </div>
+            <p>{{image.title}}</p>
+            <p>{{image.description}}</p>
+            <p>Uploaded by {{image.username}} on {{image.created_at}}</p>
+        </div>
+
+        <div id="comment-add">
+            <p>Add a comment</p>
+
+                Comment:
+                <input v-model="commentInfo.comment" type="text" name="comment" placeholder="comment">
+                Username:
+                <input v-model="commentInfo.username" type="text" name="username"  placeholder="username">
+                <button v-on:click="commentSubmit" type="button" name="button">Submit</button>
+
+        </div>
+        <div class="commentsDisplay" v-if="comments.length > 0">
+            <div class="comment" v-for="comment in comments">
+                <p>{{comment.comment}}</p>
+                <span>Created by {{comment.username}}  at {{comment.created_at}}</span>
+            </div>
+        </div>
+    </div>
+    </script>
+
+    <script id="main-upload" type="text/x-template">
+        <div class="underlay">
+        <div class="uploadWindow">
+        <button id="closeUploader" v-on:click="closeUpload">X</button>
+        <h4>Upload an image:</h4>
+        <form>
+            Title:<input v-model="imgFormInfo.title" type="text" name="title" placeholder="title" maxlength="21">
+            Description:
+            <input v-model="imgFormInfo.description" type="text" name="description" placeholder="description">
+            Username:
+            <input v-model="imgFormInfo.username" type="text" name="username" placeholder="username">
+            <br>
+            <input ref="fileInput" v-on:change="selectFile" type="file" name="url">
+            <button v-on:click="uploadImage" type="submit" id="uploadPhoto" name="button">Upload</button>
+
+        </form>
+    </div>
+</div>
+    </script>
+
+    <script src="/js/vue.js"></script>
+    <script src="/js/axios.min.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>
