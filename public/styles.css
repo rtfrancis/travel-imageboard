@@ -3,6 +3,9 @@ body {
     font-family: "Raleway", sans-serif;
 }
 
+.commentInput{
+    margin-right: 10px;
+}
 .images {
     background-image: url("bricks.jpg");
     border-top: 1px solid white;

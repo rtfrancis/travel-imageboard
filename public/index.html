@@ -31,7 +31,7 @@
         </div>
         <image-modal v-if="currentImageId" v-bind:id="currentImageId" v-on:close="closeMe"></image-modal>
     </div>
-    <button id="getmore" v-if="more" v-on:click="getMoreImages" type="button" name="button">Get more</button>
+    <button id="getmore"  v-on:click="getMoreImages" type="button" name="button">Get more</button>
     </div>
 
 
@@ -45,8 +45,8 @@
 
                 <img  v-bind:src="image.url" />
                 </div>
-                <p><strong>{{image.title}}</strong></p>
-                <p><strong>{{image.description}}</strong></p>
+                <p><strong>{{image.title}}, {{image.description}}</strong></p>
+
                 <p>Uploaded by <em>{{image.username}}</em> on <em>{{image.created_at}}</em></p>
             </div>
             <br>
@@ -54,9 +54,9 @@
                 <p><strong>Add a comment:</strong></p>
 
                     Comment:
-                    <input v-model="commentInfo.comment" type="text" name="comment" placeholder="comment">
+                    <input class="commentInput" v-model="commentInfo.comment" type="text" name="comment">
                     Username:
-                    <input v-model="commentInfo.username" type="text" name="username"  placeholder="username">
+                    <input class="commentInput" v-model="commentInfo.username" type="text" name="username">
                     <button v-on:click="commentSubmit" type="button" name="button">Submit</button>
 
             </div>

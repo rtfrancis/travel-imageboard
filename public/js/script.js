@@ -164,8 +164,9 @@ new Vue({
         var me = this;
         axios.get("/images").then(function(resp) {
             console.log(resp.data.count);
-            if(resp.data.count >= 6){
-                me.more = true
+            if (resp.data.images.length == resp.data.count) {
+                var moreButton = document.querySelector("#getmore");
+                moreButton.style.display = "none";
             }
             me.images = resp.data.images;
             me.count = resp.data.count;
