@@ -23,7 +23,6 @@ Vue.component("upload-modal", {
             this.$emit("close");
         },
         uploadImage: function(e) {
-
             var me = this;
             e.preventDefault();
             const fd = new FormData();
@@ -32,16 +31,17 @@ Vue.component("upload-modal", {
             fd.append("username", this.imgFormInfo.username);
             fd.append("password", this.imgFormInfo.password)
             fd.append("file", this.imgFormInfo.img);
-            console.log("USERRRR", this.imgFormInfo.username);
-            if(this.imgFormInfo.password == "monkey"){
                 if(this.imgFormInfo.title && this.imgFormInfo.description && this.imgFormInfo.username){
                     if(this.imgFormInfo.img){
                         axios
                             .post("/upload", fd)
                             .then(result => {
-
+                                console.log(result);
+                                if(result.data.passError){
+                                    me.passError = true;
+                                } else {
                                     me.$emit("uploaded", result.data);
-
+                                }
                             })
                             .catch(function(err) {
                                 console.log(err);
@@ -53,10 +53,6 @@ Vue.component("upload-modal", {
                 }else{
                     me.infoIncomplete = true
                 }
-            } else {
-                me.passError = true;
-            }
-
         }
     }
 });

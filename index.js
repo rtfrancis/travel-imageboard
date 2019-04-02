@@ -12,6 +12,14 @@ const ca = require("chalk-animation")
 
 const moment = require("moment")
 
+let secrets;
+
+if (process.env.NODE_ENV == "production") {
+    secrets = process.env; // in prod the secrets are environment variables
+} else {
+    secrets = require("./secrets"); // secrets.json is in .gitignore
+}
+
 var diskStorage = multer.diskStorage({
     destination: function(req, file, callback) {
         callback(null, __dirname + "/uploads");
@@ -58,6 +66,8 @@ app.get("/images", function(req, res) {
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     console.log("in the request ",req.file);
     console.log("BOOOOODY ODDY ODDY", req.body);
+    if(req.body.password == secrets.SEC_CHECK){
+        console.log("matched!");
         return db
             .uploadImages(
                 config.s3Url + req.file.filename,
@@ -73,6 +83,11 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
             .catch(function(err) {
                 console.log(err);
             });
+    }else {
+        console.log("nope");
+        res.json({passError: true})
+    }
+
 
 
 });
@@ -107,7 +122,6 @@ app.get("/comments/:id", function(req, res) {
             for (var i = 0; i < result.rows.length; i++) {
                 result.rows[i].created_at = moment(result.rows[i].created_at).format("MMM Do YY");
             }
-            console.log(result.rows);
             res.json(result.rows);
         })
         .catch(function(err) {
