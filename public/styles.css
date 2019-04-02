@@ -161,6 +161,8 @@ button {
     padding: 7px;
     margin-bottom: 15px;
     background-color: white;
+    border: 1px solid grey;
+    border-radius: 6px;
 }
 
 .photo:hover {
