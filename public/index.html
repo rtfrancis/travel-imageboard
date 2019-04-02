@@ -23,7 +23,6 @@
     <div class="images">
 
     <div class="imageDisplay" v-if="images.length > 0">
-
         <div class="photo" v-for="image in images">
             <a v-bind:href="'#' + image.id"><img
             v-bind:src="image.url"></a>
@@ -32,41 +31,45 @@
         </div>
         <image-modal v-if="currentImageId" v-bind:id="currentImageId" v-on:close="closeMe"></image-modal>
     </div>
-    <button id="getmore"  v-on:click="getMoreImages" type="button" name="button">Get more</button>
+    <button id="getmore" v-if="more" v-on:click="getMoreImages" type="button" name="button">Get more</button>
     </div>
 
 
     </main>
     <script id="main-modal" type="text/x-template">
-        <div class="overlay">
-        <button id="closer" v-on:click="closeMe">X</button>
-        <div>
-            <div class="bigImage">
+        <div id="overlayBack">
+            <div class="overlay">
+            <button id="closer" v-on:click="closeMe">X</button>
+            <div class="bigImgContainer">
+                <div class="bigImage">
 
-            <img  v-bind:src="image.url" />
+                <img  v-bind:src="image.url" />
+                </div>
+                <p><strong>{{image.title}}</strong></p>
+                <p><strong>{{image.description}}</strong></p>
+                <p>Uploaded by <em>{{image.username}}</em> on <em>{{image.created_at}}</em></p>
             </div>
-            <p>{{image.title}}</p>
-            <p>{{image.description}}</p>
-            <p>Uploaded by {{image.username}} on {{image.created_at}}</p>
-        </div>
+            <br>
+            <div id="comment-add">
+                <p><strong>Add a comment:</strong></p>
 
-        <div id="comment-add">
-            <p>Add a comment</p>
+                    Comment:
+                    <input v-model="commentInfo.comment" type="text" name="comment" placeholder="comment">
+                    Username:
+                    <input v-model="commentInfo.username" type="text" name="username"  placeholder="username">
+                    <button v-on:click="commentSubmit" type="button" name="button">Submit</button>
 
-                Comment:
-                <input v-model="commentInfo.comment" type="text" name="comment" placeholder="comment">
-                Username:
-                <input v-model="commentInfo.username" type="text" name="username"  placeholder="username">
-                <button v-on:click="commentSubmit" type="button" name="button">Submit</button>
-
-        </div>
-        <div class="commentsDisplay" v-if="comments.length > 0">
-            <div class="comment" v-for="comment in comments">
-                <p>{{comment.comment}}</p>
-                <span>Created by {{comment.username}}  at {{comment.created_at}}</span>
+            </div>
+            <br>
+            <div class="commentsDisplay" v-if="comments.length > 0">
+                <div class="comment" v-for="comment in comments">
+                    <p><strong>{{comment.comment}}</strong></p>
+                    <span>Created by <em>{{comment.username}}</em>  on <em>{{comment.created_at}}</em></span>
+                </div>
             </div>
         </div>
-    </div>
+        </div>
+
     </script>
 
     <script id="main-upload" type="text/x-template">
@@ -74,13 +77,19 @@
         <div class="uploadWindow">
         <button id="closeUploader" v-on:click="closeUpload">X</button>
         <h4>Upload an image:</h4>
+        <p v-if="infoIncomplete" class="passError">Please fill in all fields.</p>
         <form>
-            Title:<input v-model="imgFormInfo.title" type="text" name="title" placeholder="title" maxlength="21">
-            Description:
-            <input v-model="imgFormInfo.description" type="text" name="description" placeholder="description">
+            Title:<input v-model="imgFormInfo.title" type="text" name="title"  maxlength="21">
+            Caption:
+            <input v-model="imgFormInfo.description" type="text" name="description" >
             Username:
-            <input v-model="imgFormInfo.username" type="text" name="username" placeholder="username">
+            <input v-model="imgFormInfo.username" type="text" name="username" >
+            <p class="passError" v-if="passError">Incorrect password. Please try again.</p>
+            Password:
+            <input v-model="imgFormInfo.password" type="password" name="password" >
+
             <br>
+            <p v-if="fileMissing" class="passError">Please select a valid file.</p>
             <input ref="fileInput" v-on:change="selectFile" type="file" name="url">
             <button v-on:click="uploadImage" type="submit" id="uploadPhoto" name="button">Upload</button>
 
@@ -88,6 +97,17 @@
     </div>
 </div>
     </script>
+<!--
+    <script type="text/javascript">
+      <div>
+          <div>
+            <div>
+            </div>
+          </div>
+          <div></div>
+
+      </div>
+    </script> -->
 
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>

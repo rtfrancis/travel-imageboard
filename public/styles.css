@@ -8,6 +8,8 @@ body {
     border-top: 1px solid white;
     padding: 10px;
     padding-top: 50px;
+    /* position: absolute;
+    bottom: 0; */
 }
 
 .imageDisplay {
@@ -52,6 +54,7 @@ body {
     width: 150px;
     height: 50px;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 #uploadButton:hover {
@@ -72,11 +75,18 @@ body {
     right: 25px;
     color: grey;
     z-index: 100;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 1);
     color: grey;
     text-align: center;
     border-radius: 25px;
     overflow: scroll;
+}
+#overlayBack{
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: rgb(0, 0, 0, 0.5);
 }
 
 #closer {
@@ -84,12 +94,24 @@ body {
     right: 40px;
     top: 40px;
     background-color: rgba(0, 0, 0, 0);
+    border-radius: 3px;
+    cursor: pointer;
 }
-
+/* #comment-add{
+    border-top: 1px solid grey;
+} */
+.bigImgContainer{
+    border: 1px solid grey;
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 40px;
+    border-radius: 3px;
+}
 .comment {
     border: 1px solid grey;
-    width: 80%;
+    width: 60%;
     margin: 0 auto;
+    padding-bottom: 10px;
     margin-bottom: 5px;
     border-radius: 3px;
 }
@@ -177,6 +199,14 @@ header {
     margin-top: -20px;
 }
 
+.underlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .uploadWindow {
     position: fixed;
     top: 150px;
@@ -185,10 +215,13 @@ header {
     right: 150px;
     text-align: center;
     background: white;
+    opacity: 0.95;
     min-height: 250px;
-    padding-top: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     border-radius: 25px;
     z-index: 100;
+    overflow-y: scroll;
 }
 
 #closeUploader {
@@ -196,12 +229,15 @@ header {
     top: 162px;
     right: 160px;
     background-color: rgba(0, 0, 0, 0);
+    border-radius: 3px;
+    cursor: pointer;
 }
 
 .uploadWindow input {
     display: block;
     margin: 0 auto;
     margin-bottom: 10px;
+    border-radius: 3px;
 }
 
 #uploadPhoto {
@@ -209,4 +245,8 @@ header {
     text-align: center;
     display: block;
     margin: 0 auto;
+}
+
+.passError{
+    color: red
 }

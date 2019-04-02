@@ -8,7 +8,10 @@ Vue.component("upload-modal", {
                 username: "",
                 img: null
             },
-            images: []
+            images: [],
+            passError: null,
+            infoIncomplete: null,
+            fileMissing: null
         };
     },
     template: "#main-upload",
@@ -20,22 +23,40 @@ Vue.component("upload-modal", {
             this.$emit("close");
         },
         uploadImage: function(e) {
+
             var me = this;
             e.preventDefault();
             const fd = new FormData();
             fd.append("title", this.imgFormInfo.title);
             fd.append("description", this.imgFormInfo.description);
             fd.append("username", this.imgFormInfo.username);
+            fd.append("password", this.imgFormInfo.password)
             fd.append("file", this.imgFormInfo.img);
+            console.log("USERRRR", this.imgFormInfo.username);
+            if(this.imgFormInfo.password == "monkey"){
+                if(this.imgFormInfo.title && this.imgFormInfo.description && this.imgFormInfo.username){
+                    if(this.imgFormInfo.img){
+                        axios
+                            .post("/upload", fd)
+                            .then(result => {
 
-            axios
-                .post("/upload", fd)
-                .then(result => {
-                    me.$emit("uploaded", result.data);
-                })
-                .catch(function(err) {
-                    console.log(err);
-                });
+                                    me.$emit("uploaded", result.data);
+
+                            })
+                            .catch(function(err) {
+                                console.log(err);
+                            });
+                    } else {
+                        me.fileMissing = true
+                    }
+
+                }else{
+                    me.infoIncomplete = true
+                }
+            } else {
+                me.passError = true;
+            }
+
         }
     }
 });
@@ -131,12 +152,14 @@ new Vue({
     el: "#main",
     data: {
         images: [],
+        more: false,
         count: null,
         currentImageId: location.hash.slice(1) || null,
         imgFormInfo: {
             title: "",
             description: "",
             username: "",
+            password: "",
             img: null
         },
         uploadPositive: false
@@ -144,6 +167,10 @@ new Vue({
     mounted: function() {
         var me = this;
         axios.get("/images").then(function(resp) {
+            console.log(resp.data.count);
+            if(resp.data.count >= 6){
+                me.more = true
+            }
             me.images = resp.data.images;
             me.count = resp.data.count;
         });

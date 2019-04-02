@@ -8,6 +8,9 @@ const path = require("path");
 
 const s3 = require("./s3");
 const config = require("./config");
+const ca = require("chalk-animation")
+
+const moment = require("moment")
 
 var diskStorage = multer.diskStorage({
     destination: function(req, file, callback) {
@@ -53,27 +56,32 @@ app.get("/images", function(req, res) {
 });
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    return db
-        .uploadImages(
-            config.s3Url + req.file.filename,
-            req.body.username,
-            req.body.title,
-            req.body.description
-        )
-        .then(function(result) {
-            res.json({
-                img: result.rows[0]
+    console.log("in the request ",req.file);
+    console.log("BOOOOODY ODDY ODDY", req.body);
+        return db
+            .uploadImages(
+                config.s3Url + req.file.filename,
+                req.body.username,
+                req.body.title,
+                req.body.description
+            )
+            .then(function(result) {
+                res.json({
+                    img: result.rows[0]
+                });
+            })
+            .catch(function(err) {
+                console.log(err);
             });
-        })
-        .catch(function(err) {
-            console.log(err);
-        });
+
+
 });
 
 app.get("/images/:id", function(req, res) {
     db
         .getImageById(req.params.id)
         .then(function(result) {
+            result.rows[0].created_at = moment(result.rows[0].created_at).format("MMM Do YY");
             res.json(result.rows[0]);
         })
         .catch(function(err) {
@@ -96,6 +104,10 @@ app.get("/comments/:id", function(req, res) {
     db
         .getComments(req.params.id)
         .then(function(result) {
+            for (var i = 0; i < result.rows.length; i++) {
+                result.rows[i].created_at = moment(result.rows[i].created_at).format("MMM Do YY");
+            }
+            console.log(result.rows);
             res.json(result.rows);
         })
         .catch(function(err) {
@@ -114,4 +126,4 @@ app.get("/moreimages/:id", function(req, res) {
         });
 });
 
-app.listen(8080, () => console.log(`i'm listening`));
+app.listen(process.env.PORT || 8080, () => ca.rainbow(`I'm listening.`));

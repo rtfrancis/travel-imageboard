@@ -1,6 +1,6 @@
 var spicedPg = require("spiced-pg");
 
-var db = spicedPg("postgres:postgres:postgres@localhost:5432/photos");
+var db = spicedPg(process.env.DATABASE_URL || "postgres:postgres:postgres@localhost:5432/travelboard");
 
 module.exports.getImages = function getImages() {
     return db.query(`SELECT * FROM images
