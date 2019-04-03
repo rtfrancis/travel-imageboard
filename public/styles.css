@@ -29,8 +29,10 @@ body {
     margin: 20px auto;
     width: 150px;
     height: 50px;
+    color: grey;
+    /* text-transform: uppercase; */
     background-color: rgba(0, 0, 0, 0);
-    border: 1px solid black;
+    border: 1px solid grey;
     border-radius: 10px;
     user-select: none;
     outline: none;
@@ -41,7 +43,7 @@ body {
     background-color: white;
     color: rgba(0, 0, 0, 0.5);
     border: 1px solid white;
-    color: black;
+    color: grey;
     user-select: none;
 }
 
