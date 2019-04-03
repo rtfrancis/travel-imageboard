@@ -64,8 +64,6 @@ app.get("/images", function(req, res) {
 });
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    console.log("in the request ",req.file);
-    console.log("BOOOOODY ODDY ODDY", req.body);
     if(req.body.password == secrets.SEC_CHECK){
         console.log("matched!");
         return db

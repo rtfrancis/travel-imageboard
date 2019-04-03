@@ -36,7 +36,6 @@ Vue.component("upload-modal", {
                         axios
                             .post("/upload", fd)
                             .then(result => {
-                                console.log(result);
                                 if(result.data.passError){
                                     me.passError = true;
                                 } else {
@@ -163,7 +162,6 @@ new Vue({
     mounted: function() {
         var me = this;
         axios.get("/images").then(function(resp) {
-            console.log(resp.data.count);
             if (resp.data.images.length == resp.data.count) {
                 var moreButton = document.querySelector("#getmore");
                 moreButton.style.display = "none";
@@ -204,7 +202,6 @@ new Vue({
             var newId = this.images[this.images.length - 1];
             axios.get("/moreimages/" + newId.id).then(function(results) {
                 self.images = [...self.images, ...results.data];
-                console.log(self.images.length);
                 if (self.images.length == self.count) {
                     var moreButton = document.querySelector("#getmore");
                     moreButton.style.display = "none";
